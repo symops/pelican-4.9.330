@@ -1,0 +1,6 @@
+
+config RTK_SE
+	bool "Realtek Streaming Engine DMA driver"
+	default n
+	help
+	  Enable Realtek SE-DMA driver. If unsure, say N.

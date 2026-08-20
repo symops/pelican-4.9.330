@@ -1,0 +1,467 @@
+#include <dt-bindings/clock/rtd1295-clk.h>
+#include <dt-bindings/reset/rtd1295-reset.h>
+#include <dt-bindings/power/rtd1295-power.h>
+#include <dt-bindings/thermal/thermal.h>
+
+/{
+	aliases {
+		i2c0 = &i2c_0;
+		i2c1 = &i2c_1;
+		i2c2 = &i2c_2;
+		i2c3 = &i2c_3;
+		i2c4 = &i2c_4;
+		i2c5 = &i2c_5;
+	};
+
+	efuse@98017000 {
+		compatible = "realtek,efuse";
+		reg = <0x98017000 0x400>;
+		read-only;
+		#address-cells = <1>;
+		#size-cells = <1>;
+		status = "okay";
+
+		efuse_uuid: uuid@1A4 {
+			reg = <0x1A4 0xC>;
+		};
+		efuse_etn_phy: etn_phy@1B9 {
+			reg = <0x1B9 0x9>;
+			bits = <2 64>;
+		};
+		efuse_etn_phy_rc: etn_phy_rc@1BF {
+			reg = <0x1BF 0x2>;
+			bits = <5 4>;
+		};
+		efuse_etn_phy_r: etn_phy_r@1BF {
+			reg = <0x1BF 0x1>;
+			bits = <1 4>;
+		};
+		efuse_etn_phy_amp: etn_phy_amp@1B9 {
+			reg = <0x1B9 0x3>;
+			bits = <2 16>;
+		};
+		efuse_etn_phy_adc: etn_phy_adc@1BB {
+			reg = <0x1BB 0x3>;
+			bits = <2 16>;
+		};
+		efuse_pwr_id: pwr_id@1CC {
+			reg = <0x1CC 0x1>;
+			bits = <6 2>;
+		};
+		efuse_package_id: package_id@1D8 {
+			reg = <0x1D8 0x1>;
+			bits = <0 2>;
+		};
+		efuse_usb_cc_en: usb_cc_en@1D8 {
+			reg = <0x1D8 0x1>;
+			bits = <2 1>;
+		};
+		efuse_usb_cc1_4_7_k_cal: usb_cc1_4_7_k_cal@1D8 {
+			reg = <0x1D8 0x1>;
+			bits = <3 4>;
+		};
+		efuse_usb_cc1_12_k_cal: usb_cc1_12_k_cal@1D8 {
+			reg = <0x1D8 0x2>;
+			bits = <7 4>;
+		};
+		efuse_usb_cc2_4_7_k_cal: usb_cc2_4_7_k_cal@1D9 {
+			reg = <0x1D9 0x1>;
+			bits = <3 4>;
+		};
+		efuse_usb_cc2_12_k_cal: usb_cc2_12_k_cal@1D9 {
+			reg = <0x1D9 0x2>;
+			bits = <7 4>;
+		};
+		efuse_top_iddq: top_iddq@1DA {
+			reg = <0x1DA 0x2>;
+			bits = <3 6>;
+		};
+		efuse_cpu_iddq: cpu_iddq@1DB {
+			reg = <0x1DB 0x1>;
+			bits = <1 6>;
+		};
+		efuse_usb_dp_dm: usb_dp_dm@1DC {
+			reg = <0x1DC 0x1>;
+			bits = <0 4>;
+		};
+		efuse_cc_cal: cc_cal@1DC {
+			reg = <0x1DC 0x4>;
+			bits = <4 24>;
+		};
+		efuse_chip_id: chip_id@200 {
+			reg = <0x200 0x10>;
+		};
+		efuse_prog_rvd: prog_rvd@3FC {
+			reg = <0x3FC 0x4>;
+		};
+	};
+
+	sb2: sb2@9801a000 {
+		compatible = "realtek,rtd1295-sysbrg2", "syscon", "simple-mfd";
+		reg = <0x9801a000 0x1000>;
+		ranges = <0x0 0x9801a000 0x1000>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+	};
+
+	misc: misc@9801b000 {
+		compatible = "syscon", "simple-mfd";
+		reg = <0x9801b000 0x1000>;
+		ranges = <0x0 0x9801b000 0x1000>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+	};
+
+	scpu_wrapper: scpu_wrapper@9801d000 {
+		compatible = "Realtek,rtk-scpu_wrapper", "syscon", "simple-mfd";
+		reg = <0x9801d000 0x1000>;
+		ranges = <0x0 0x9801d000 0x1000>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+	};
+
+	osc27m: osc27m {
+		compatible = "fixed-clock";
+		#clock-cells = <0>;
+		clock-frequency = <27000000>;
+		clock-output-names = "osc27m";
+	};
+
+	crt: crt@98000000 {
+		reg = <0x98000000 0x1000>;
+		compatible = "realtek,rtd1295-crt", "syscon", "simple-mfd";
+		ranges = <0x0 0x98000000 0x1000>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+	};
+
+	iso: iso@98007000 {
+		reg = <0x98007000 0x1000>;
+		compatible = "syscon", "simple-mfd";
+		ranges = <0x0 0x98007000 0x1000>;
+		#address-cells = <1>;
+		#size-cells = <1>;
+	};
+
+	gpu: gpu@98050000 {
+		compatible = "arm,mali-midgard";
+		reg = <0x98050000 0xffff>;
+		interrupts = <0 67 4>, <0 68 4>, <0 66 4>;
+		interrupt-names = "JOB", "MMU", "GPU";
+		power-domains = <&pd RTD1295_PD_GPU>;
+		clocks = <&cc RTD1295_CRT_CLK_GPU>;
+		clock-names = "clk_mali";
+		resets = <&cc RTD1295_CRT_RSTN_GPU>;
+		#cooling-cells = <2>;
+		status = "okay";
+		power-model {
+			compatible = "arm,mali-simple-power-model";
+			static-coefficient = <2427750>;
+			dynamic-coefficient = <4687>;
+			ts = <20000 2000 (-20) 2>;
+			thermal-zone = "cpu-thermal";
+		};
+	};
+
+	i2c_0: i2c@0x98007D00 {
+		compatible = "realtek,rtk-i2c";
+		reg = <0x98007D00 0x100>,
+			<0x98007000 0x100>;
+		interrupt-parent = <&mux_intc>;
+		interrupts = <1 8>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&i2c_pins_0>;
+		i2c-num = <0>;
+		status = "okay";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		clocks = <&ic RTD1295_ISO_CLK_EN_I2C0>;
+		resets = <&ic RTD1295_ISO_RSTN_I2C_0>;
+	};
+
+	i2c_1: i2c@0x98007C00 {
+		compatible = "realtek,rtk-i2c";
+		reg = <0x98007C00 0x100>,
+			<0x98007000 0x100>;
+		interrupt-parent = <&mux_intc>;
+		interrupts = <1 11>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&i2c_pins_1>;
+		i2c-num = <1>;
+		status = "disabled";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		clocks = <&ic RTD1295_ISO_CLK_EN_I2C1>;
+		resets = <&ic RTD1295_ISO_RSTN_I2C_1>;
+	};
+
+	i2c_2: i2c@0x9801B700 {
+		compatible = "realtek,rtk-i2c";
+		reg = <0x9801B700 0x100>,
+			<0x9801B00C 0x100>;
+		interrupt-parent = <&mux_intc>;
+		interrupts = <0 26>;
+		i2c-num = <2>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&i2c_pins_2>;
+		status = "okay";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		clocks = <&cc RTD1295_CRT_CLK_EN_MISC_I2C_2>;
+		resets = <&cc RTD1295_CRT_RSTN_I2C_2>;
+	};
+
+	i2c_3: i2c@0x9801B900 {
+		compatible = "realtek,rtk-i2c";
+		reg = <0x9801B900 0x100>,
+			<0x9801B00C 0x100>;
+		interrupt-parent = <&mux_intc>;
+		interrupts = <0 23>;
+		i2c-num = <3>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&i2c_pins_3>;
+		status = "okay";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		clocks = <&cc RTD1295_CRT_CLK_EN_MISC_I2C_3>;
+		resets = <&cc RTD1295_CRT_RSTN_I2C_3>;
+	};
+
+	i2c_4: i2c@0x9801BA00 {
+		compatible = "realtek,rtk-i2c";
+		reg = <0x9801BA00 0x100>,
+			<0x9801B00C 0x100>;
+		interrupt-parent = <&mux_intc>;
+		interrupts = <0 15>;
+		i2c-num = <4>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&i2c_pins_4>;
+		status = "disabled";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		clocks = <&cc RTD1295_CRT_CLK_EN_MISC_I2C_4>;
+		resets = <&cc RTD1295_CRT_RSTN_I2C_4>;
+	};
+
+	i2c_5: i2c@0x9801BB00 {
+		compatible = "realtek,rtk-i2c";
+		reg = <0x9801BB00 0x100>,
+			<0x9801B00C 0x100>;
+		interrupt-parent = <&mux_intc>;
+		interrupts = <0 14>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&i2c_pins_5>;
+		i2c-num = <5>;
+		status = "okay";
+		#address-cells = <1>;
+		#size-cells = <0>;
+		clocks = <&cc RTD1295_CRT_CLK_EN_MISC_I2C_5>;
+		resets = <&cc RTD1295_CRT_RSTN_I2C_5>;
+	};
+
+	dvfs: cpu-dvfs {
+	};
+
+	thermal-zones {
+		cpu_thermal: cpu-thermal {
+			polling-delay-passive = <250>;
+			polling-delay = <1000>;
+			thermal-sensors = <&cpu_tm>;
+
+			trips {
+				cpu_crit: cpu-crit {
+					temperature = <130000>;
+					hysteresis = <2000>;
+					type = "critical";
+				};
+			};
+		};
+	};
+
+	rtk_usb_power_manager@0 {
+		clocks = <&cc RTD1295_CRT_CLK_EN_USB>;
+		clock-names = "clk_en_usb";
+		resets =
+			 <&cc RTD1295_CRT_RSTN_USB_PHY0>,
+			 <&cc RTD1295_CRT_RSTN_USB_PHY1>,
+			 <&cc RTD1295_CRT_RSTN_USB_PHY2>,
+			 <&cc RTD1295_CRT_RSTN_USB_PHY3>,
+			 <&cc RTD1295_CRT_RSTN_USB3_PHY0_POW>,
+			 <&cc RTD1295_CRT_RSTN_USB3_PHY1_POW>,
+			 <&cc RTD1295_CRT_RSTN_USB3_P0_MDIO>,
+			 <&cc RTD1295_CRT_RSTN_USB3_P1_MDIO>,
+			 <&cc RTD1295_CRT_RSTN_USB>;
+		reset-names =
+			      "u2phy0", /* port0 u2phy */
+			      "u2phy1", /* port1 u2phy */
+			      "u2phy2", /* port2 u2phy */
+			      "u2phy3", /* port3 u2phy */
+			      "u3phy0", /* port0 u3phy */
+			      "u3phy3", /* port3 u3phy */
+			      "u3mdio0", /* port0 u3mdio */
+			      "u3mdio3", /* port3 u3mdio */
+			      "usb";
+	};
+
+	rtk_fan: rtk_fan@9801BC00 {
+		compatible = "realtek,rtk-fan";
+		reg = <0x9801BC00 0x14>, <0x9801A910 0x4>;
+		interrupt-parent = <&mux_intc>;
+		interrupts = <0 29>;
+		status = "okay";
+
+		timer_target = <0x100000>;
+		fan_debounce = <0x0>;// 0x0~0x7
+		fan_factor = <2>; /* count per revolution for fan */
+		clocks = <&cc RTD1295_CRT_CLK_EN_FAN>;
+		resets = <&cc RTD1295_CRT_RSTN_FAN>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&dc_fan_sensor_pins>;
+
+		/* For speed control */
+		pwms = <&pwm 1 37878>; // (1) pwm node (2) pwm id (3) out period_ns (1/26400 ns)
+	};
+};
+
+&crt {
+	cc: clock-controller {
+		compatible = "realtek,rtd1295-crt-clk";
+		#clock-cells = <1>;
+		#reset-cells = <1>;
+		realtek,sb2-lock = <&sb2_lock0>;
+	};
+
+	pd: power-domain {
+		compatible = "realtek,rtd1295-power";
+		#power-domain-cells = <1>;
+	};
+
+};
+
+&iso {
+
+	ic: clock-controller {
+		compatible = "realtek,rtd1295-iso-clk";
+		#clock-cells = <1>;
+		#reset-cells = <1>;
+	};
+
+	reboot-mode@640 {
+		compatible = "realtek,reboot-mode";
+		reg = <0x640 0x4>;
+		status = "okay";
+	};
+
+	reboot@680 {
+		compatible = "realtek,reboot";
+		reg = <0x680 0x48>;
+		rst-oe = <0>;
+		rst-oe-for-init = <0>;
+		status = "okay";
+	};
+};
+
+&sb2 {
+	sb2_lock0: sb2-lock@0 {
+		compatible = "realtek,sb2-sem";
+		reg = <0x0 0x4>;
+	};
+
+	inv@4 {
+		compatible = "realtek,sysbrg2-inv";
+		reg = <0x4 0x10>;
+		interrupts = <0 36 4>;
+		status = "okay";
+	};
+
+	dbg@458 {
+		compatible = "realtek,sysbrg2-dbg";
+		reg = <0x458 0x8c>;
+		interrupts = <0 36 4>;
+		status = "okay";
+	};
+
+	sb2_lock1: sb2-lock@620 {
+		compatible = "realtek,sb2-sem";
+		reg = <0x620 0x4>;
+	};
+
+	sb2_lock2: sb2-lock@624 {
+		compatible = "realtek,sb2-sem";
+		reg = <0x624 0x4>;
+	};
+
+	sb2_lock3: sb2-lock@628 {
+		compatible = "realtek,sb2-sem";
+		reg = <0x628 0x4>;
+	};
+
+	sb2_lock4: sb2-lock@62c {
+		compatible = "realtek,sb2-sem";
+		reg = <0x62c 0x4>;
+	};
+
+	sb2_lock5: sb2-lock@630 {
+		compatible = "realtek,sb2-sem";
+		reg = <0x630 0x4>;
+	};
+
+	sb2_lock6: sb2-lock@634 {
+		compatible = "realtek,sb2-sem";
+		reg = <0x634 0x4>;
+	};
+
+	sb2_lock7: sb2-lock@638 {
+		compatible = "realtek,sb2-sem";
+		reg = <0x638 0x4>;
+	};
+
+	sb2_lock_avlog: sb2_lock8: sb2-lock@63c {
+		compatible = "realtek,sb2-sem", "realtek,sb2-sem-avlog";
+		reg = <0x63c 0x4>;
+	};
+};
+
+&misc {
+	refclk: refclk@538 {
+		compatible = "realtek,refclk";
+		reg = <0x538 0x10>;
+		status = "okay";
+	};
+
+	watchdog@5b0 {
+		compatible = "realtek,watchdog";
+		reg = <0x5b0 0x20>;
+		realtek,misc = <&misc>;
+		interrupts = <0 0 4>;
+		timeout-sec = <120>;
+		realtek,start-wdt;
+		status = "okay";
+	};
+
+	rtc@600 {
+		compatible = "realtek,rtd1295-rtc";
+		reg = <0x600 0x34>;
+		realtek,iso = <&iso>;
+		rtc-base-year = <2014>;
+		interrupts = <0 39 4>;
+		clocks = <&cc RTD1295_CRT_CLK_EN_MISC_RTC>;
+		status = "okay";
+	};
+};
+
+&scpu_wrapper {
+	cpu_tm: thermal-sensor@150 {
+		compatible = "realtek,rtd129x-thermal-sensor";
+		reg = <0x150 0x20>;
+		#thermal-sensor-cells = <0>;
+		status = "okay";
+	};
+
+	dbg@200 {
+		compatible = "realtek,scpu-wrapper-dbg";
+		reg = <0x200 0x3C>;
+		interrupts = <0 46 4>;
+		status = "okay";
+	};
+};

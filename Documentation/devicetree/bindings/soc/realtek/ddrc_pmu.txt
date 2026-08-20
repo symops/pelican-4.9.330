@@ -1,0 +1,14 @@
+Realtek customized Synopsis DDR memory controller PMU dt-bindings
+=================================================================
+
+Required properties:
+- compatible:
+        "realtek,rtk-13xx-ddrc-pmu"
+- reg: Address range of DDR controller PMU
+
+Example:
+
+	rtk-ddrc-pmu@98094000 {
+                compatible = "realtek,rtk-ddrc-pmu";
+                reg = <0x0 0x98094000 0x0 0x040>;
+	};

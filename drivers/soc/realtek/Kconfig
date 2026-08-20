@@ -1,0 +1,29 @@
+#
+# Realtek Soc Drviers
+#
+menu "Realtek Soc Drviers"
+
+config RTD129x
+	bool "Realtek RTD129x SoC family specific drivers"
+	depends on ARCH_RTD129x
+	default y
+	help
+	  Realtek RTD129x SoC family specific support.
+
+	  If unsure, say N.
+
+config SENDFILE_PATCH
+	bool "Reverse sendfile patch"
+	default n
+	help
+	  Use patched sendfile syscall to improve write performance on NAS.
+
+	  If unsure, say N.
+
+if RTD129x
+source "drivers/soc/realtek/rtd129x/Kconfig"
+endif # RTD129x
+
+source "drivers/soc/realtek/common/Kconfig"
+
+endmenu

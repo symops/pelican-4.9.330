@@ -1,0 +1,14 @@
+config RTK_CPU_CACHE_SUPPLY_COORDINATOR
+	bool "Realtek CPU cache supply coordinator"
+	depends on REGULATOR_G2227
+	depends on ARCH_RTD129x
+	default y
+
+config RTK_CPU_HIGH_LOAD_BOOSTER
+	bool "Realtek CPU high-load booster"
+	default n
+
+config RTK_CPU_VOLT_SEL
+	bool "Add OPP prop extn to CPU device"
+	default y
+

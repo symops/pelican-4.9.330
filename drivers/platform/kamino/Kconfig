@@ -1,0 +1,36 @@
+#
+# Platform support for KAMINO
+#
+
+menuconfig KAMINO_PLATFORMS
+	bool "Platform support for KAMINO"
+	---help---
+	  Say Y here to get to see options for platform support for
+	  various kamino devices. This option alone does
+	  not add any kernel code.
+
+	  If you say N, all options in this submenu will be skipped and disabled.
+
+if KAMINO_PLATFORMS
+
+config KAMINO_PSTORE
+	tristate "KAMINO pstore support"
+	---help---
+	  This module instantiates the persistent storage on kamino
+	  devices. It can be used to store away console logs and crash
+	  information across reboots.
+
+config KAMINO_BUTTON
+	tristate "KAMINO botton support"
+	---help---
+	  This module provide to detect reset button and power button.
+    
+config KAMINO_BOOT_COMPLETE
+	tristate "KAMINO boot complete"
+	---help---
+	  This module provide the interface to check if the device boot is completed.
+
+config YODA_ONLY
+        bool "Yoda platform only"
+
+endif # KAMINO_PLATFORMS

@@ -1,0 +1,284 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * DVFS dts file for Realtek RTD1295 SoC
+ * Regulator model: pmic,g2227
+ */
+
+#include <dt-bindings/regulator/gmt,g22xx.h>
+
+&i2c_0 {
+	status = "okay";
+
+	g2227: g2227@12 {
+		compatible = "gmt,g2227";
+		reg = <0x12>;
+		status = "okay";
+		regulators {
+			compatible = "gmt,g2227-regulator";
+			status = "okay";
+		};
+	};
+};
+&g2227 {
+	regulators {
+		vd33_supp: dc1 {
+			regulator-name = "vd33";
+			regulator-min-microvolt = <3000000>;
+			regulator-max-microvolt = <3300000>;
+
+			regulator-boot-on;
+			regulator-always-on;
+			regulator-initial-mode = <G22XX_DC_MODE_FORCE_PWM>;
+		};
+
+		cpu_supp: dc2 {
+			regulator-name = "cpudvs";
+			regulator-min-microvolt = <800000>;
+			regulator-max-microvolt = <1187500>;
+
+			regulator-boot-on;
+			regulator-always-on;
+			regulator-initial-mode = <G22XX_DC_MODE_AUTO>;
+			regulator-state-mem {
+				regulator-off-in-suspend;
+			};
+		};
+		gpu_supp: dc3 {
+			regulator-name = "gpudvs";
+			regulator-min-microvolt = <800000>;
+			regulator-max-microvolt = <1187500>;
+
+			regulator-boot-on;
+			regulator-always-on;
+			regulator-initial-mode = <G22XX_DC_MODE_AUTO>;
+			regulator-ramp-delay = <625>;
+			regulator-state-mem {
+				regulator-off-in-suspend;
+			};
+		};
+		ddr_supp: dc4 {
+			regulator-name = "ddr";
+			regulator-min-microvolt = <1500000>;
+			regulator-max-microvolt = <1500000>;
+			regulator-boot-on;
+			regulator-always-on;
+			regulator-initial-mode = <G22XX_DC_MODE_AUTO>;
+			regulator-state-coldboot {
+				regulator-off-in-suspend;
+			};
+
+		};
+		iso_supp: dc5 {
+			regulator-name = "iso";
+			regulator-min-microvolt = <800000>;
+			regulator-max-microvolt = <1187500>;
+
+			regulator-boot-on;
+			regulator-always-on;
+			regulator-initial-mode = <G22XX_DC_MODE_AUTO>;
+		};
+		top_supp: dc6 {
+			regulator-name = "top";
+			regulator-min-microvolt = <800000>;
+			regulator-max-microvolt = <1187500>;
+
+			regulator-boot-on;
+			regulator-always-on;
+			regulator-initial-mode = <G22XX_DC_MODE_AUTO>;
+			regulator-state-mem {
+				regulator-off-in-suspend;
+			};
+		};
+		vd18_supp: ldo2 {
+			regulator-name = "ldo2";
+			regulator-min-microvolt = <1500000>;
+			regulator-max-microvolt = <1900000>;
+
+			regulator-boot-on;
+			regulator-always-on;
+			regulator-initial-mode = <G22XX_LDO_MODE_NORMAL>;
+			regulator-state-mem {
+				regulator-off-in-suspend;
+			};
+		};
+		l2_supp: ldo3 {
+			regulator-name = "ldo3";
+			regulator-min-microvolt = <800000>;
+			regulator-max-microvolt = <1200000>;
+
+			regulator-boot-on;
+			regulator-always-on;
+			regulator-initial-mode = <G22XX_LDO_MODE_NORMAL>;
+			regulator-state-mem {
+				regulator-off-in-suspend;
+			};
+		};
+	};
+};
+
+&dvfs {
+	cpu_opps: cpu-opp-table {
+		compatible = "operating-points-v2";
+		opp-shared;
+
+		opp-300mhz {
+			opp-hz = /bits/ 64 <300000000>;
+			opp-microvolt = <800000>;
+			clock-latency-ns = <150000>;
+			status = "okay";
+		};
+		opp-400mhz {
+			opp-hz = /bits/ 64 <400000000>;
+			opp-microvolt = <800000>;
+			clock-latency-ns = <150000>;
+			status = "disabled";
+		};
+		opp-500mhz {
+			opp-hz = /bits/ 64 <500000000>;
+			opp-microvolt = <800000>;
+			clock-latency-ns = <150000>;
+			status = "okay";
+		};
+		opp-600mhz {
+			opp-hz = /bits/ 64 <600000000>;
+			opp-microvolt = <825000>;
+			clock-latency-ns = <150000>;
+			status = "okay";
+		};
+		opp-700mhz {
+			opp-hz = /bits/ 64 <700000000>;
+			opp-microvolt = <850000>;
+			clock-latency-ns = <150000>;
+			status = "okay";
+		};
+		opp-800mhz {
+			opp-hz = /bits/ 64 <800000000>;
+			opp-microvolt = <875000>;
+			clock-latency-ns = <150000>;
+			status = "okay";
+		};
+		opp-900mhz {
+			opp-hz = /bits/ 64 <900000000>;
+			opp-microvolt = <900000>;
+			clock-latency-ns = <150000>;
+			status = "okay";
+		};
+		opp-1000mhz {
+			opp-hz = /bits/ 64 <1000000000>;
+			opp-microvolt = <925000>;
+			clock-latency-ns = <150000>;
+			status = "okay";
+		};
+		opp-1100mhz {
+			opp-hz = /bits/ 64 <1100000000>;
+			opp-microvolt = <962500>;
+			clock-latency-ns = <150000>;
+			status = "okay";
+		};
+		opp-1200mhz {
+			opp-hz = /bits/ 64 <1200000000>;
+			opp-microvolt = <1012500>;
+			clock-latency-ns = <150000>;
+			opp-suspend;
+			status = "okay";
+		};
+		opp-1300mhz {
+			opp-hz = /bits/ 64 <1300000000>;
+			opp-microvolt = <1062500>;
+			clock-latency-ns = <150000>;
+			status = "okay";
+		};
+		opp-1400mhz {
+			opp-hz = /bits/ 64 <1400000000>;
+			opp-microvolt = <1100000>;
+			clock-latency-ns = <150000>;
+			status = "okay";
+		};
+	};
+};
+
+&gpu {
+	operating-points =
+		/* KHz uV */
+		<620000 1100000>,
+		<600000 1100000>,
+		<580000 1075000>,
+		<560000 1075000>,
+		<540000 1050000>,
+		<520000 1025000>,
+		<500000 1000000>,
+		<460000 1000000>,
+		<440000 1000000>,
+		<400000 1000000>,
+		<380000 975000>;
+};
+
+&cpu_thermal {
+	trips {
+		cpu_alert0: cpu-alert0 {
+			temperature = <105000>;
+			hysteresis = <3000>;
+			type = "passive";
+		};
+		cpu_alert1: cpu-alert1 {
+			temperature = <115000>;
+			hysteresis = <3000>;
+			type = "passive";
+		};
+		cpu_crit: cpu-crit {
+			temperature = <130000>;
+			hysteresis = <2000>;
+			type = "critical";
+		};
+		gpu_alert0: gpu-alert0 {
+			temperature = <95000>;
+			hysteresis = <4000>;
+			type = "passive";
+		};
+		gpu_alert1: gpu-alert1 {
+			temperature = <100000>;
+			hysteresis = <4000>;
+			type = "passive";
+		};
+	};
+
+	cooling-maps {
+		map0 {
+			trip = <&cpu_alert0>;
+			cooling-device = <&A53_0 1 6>;
+		};
+		map1 {
+			trip = <&cpu_alert1>;
+			cooling-device = <&A53_0 7 THERMAL_NO_LIMIT>;
+		};
+		map2 {
+			trip = <&gpu_alert0>;
+			cooling-device = <&gpu 2 2>;
+		};
+		map3 {
+			trip = <&gpu_alert1>;
+			cooling-device = <&gpu 5 5>;
+		};
+	};
+};
+
+&gpu {
+	mali-supply = <&gpu_supp>;
+};
+
+&A53_0 {
+	cpu-supply = <&cpu_supp>;
+	operating-points-v2 = <&cpu_opps>;
+};
+&A53_1 {
+	cpu-supply = <&cpu_supp>;
+	operating-points-v2 = <&cpu_opps>;
+};
+&A53_2 {
+	cpu-supply = <&cpu_supp>;
+	operating-points-v2 = <&cpu_opps>;
+};
+&A53_3 {
+	cpu-supply = <&cpu_supp>;
+	operating-points-v2 = <&cpu_opps>;
+};

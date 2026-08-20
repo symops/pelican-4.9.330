@@ -1,0 +1,27 @@
+Realtek SCPU Wrapper DT-binding
+===============================
+
+Debug Driver
+------------
+
+Required properties:
+
+- compatible: should contain "realtek,scpu-wrapper-dbg"
+
+- reg: should be to io register of dbg function
+
+- interrupts: the interrupt
+
+Optional properties:
+
+- nvmem-cells and nvmem-cell-names: nvmem for checking chip type
+
+
+FSS Driver
+----------
+
+Required properties:
+
+- compatible: should contain "realtek,scpu-wrapper-fss"
+
+- reg: should be to io register of fss function

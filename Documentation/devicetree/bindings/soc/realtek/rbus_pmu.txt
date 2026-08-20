@@ -1,0 +1,15 @@
+Realtek Register bus PMU dt-bindings
+=============================================
+
+Required properties:
+- compatible:
+        - "realtek,rtk-16xx-rbus-pmu" for rtd16xx family
+        - "realtek,rtk-13xx-rbus-pmu" for rtd13xx family
+- reg: Address range of register bus PMU
+
+Example:
+
+	rtk-rbus-pmu@9801A400 {
+                compatible = "realtek,rtk-13xx-rbus-pmu";
+                reg = <0x0 0x9801A400 0x0 0x060>;
+	};

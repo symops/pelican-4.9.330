@@ -1,0 +1,50 @@
+Realtek System Bridge 2 Driver DT-bindings
+==========================================
+
+Core Driver
+-----------
+
+Required properties:
+
+- compatible: should be one of the following,
+	"realtek,rtd1295-sysbrg2",
+	"realtek,rtd1395-sysbrg2",
+	"realtek,rtd1619-sysbrg2",
+	"realtek,rtd1319-sysbrg2".
+
+
+Debug Driver
+------------
+
+Required properties:
+
+- compatible: should be "realtek,sysbrg2-dbg"
+
+- reg: should contain the io register sapce
+
+- interrupts: interrupt
+
+Optional properties:
+
+- nvmem-cells: nvmem for checking secure chip
+
+- nvmem-cell-names: nvmem name above, should be 'secure_en';
+
+
+Invalid Access Driver
+---------------------
+
+Required properties:
+
+- compatible: should be "realtek,sysbrg2-inv"
+
+- reg: should contain the io register sapce
+
+- interrupts: interrupt
+
+Optional properties:
+
+- nvmem-cells: nvmem for checking secure chip
+
+- nvmem-cell-names: nvmem name above, should be 'secure_en';
+

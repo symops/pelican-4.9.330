@@ -1,0 +1,17 @@
+menu "Realtek Power Domain"
+
+config PD_REALTEK
+	bool "Realtek Power Domain Support"
+	depends on PM
+	depends on RTK_PLATFORM
+	select PM_GENERIC_DOMAINS
+	default y
+
+config PD_RTD1295
+	bool "Realtek RTD1295 Power Domain Driver"
+	depends on PD_REALTEK
+	default y if ARCH_RTD129x
+	help
+	  Realtek RTD1295 Power Domain Driver Support
+
+endmenu

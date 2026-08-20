@@ -1,0 +1,22 @@
+#ifndef __DT_BINDINGS_RTD1295_POWER_H
+#define __DT_BINDINGS_RTD1295_POWER_H
+
+#define RTD1295_PD_VE1        0
+#define RTD1295_PD_VE2        1
+#define RTD1295_PD_VE3        2
+#define RTD1295_PD_GPU        3
+#define RTD1295_PD_NAT        4
+#define RTD1295_PD_SRAM_VE1   5
+#define RTD1295_PD_SRAM_VE2   6
+#define RTD1295_PD_SRAM_VE3   7
+#define RTD1295_PD_SRAM_GPU   8
+#define RTD1295_PD_SRAM_NAT   9
+#define RTD1295_PD_ISO_VE1   10
+#define RTD1295_PD_ISO_VE2   11
+#define RTD1295_PD_ISO_VE3   12
+#define RTD1295_PD_ISO_GPU   13
+#define RTD1295_PD_ISO_NAT   14
+
+#define RTD1295_PD_MAX       20
+
+#endif /* __DT_BINDINGS_RTD1295_POWER_H */

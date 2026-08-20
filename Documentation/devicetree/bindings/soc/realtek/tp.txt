@@ -1,0 +1,24 @@
+Realtek TP DT-binding
+========================
+
+* required properties:
+
+- compatible: shall contain "realtek,tp".
+
+- reg: shall contain at least 1 register address.
+
+- clockL shall contain num to register num
+
+  See also Documentation/devicetree/bindings/clock/clock-bindings.txt
+
+
+Example:
+
+tp@98014000 {
+	compatible = "realtek,tp";
+	reg = <0x0 0x98014000 0x0 0x1000>,
+	      <0x0 0x98039000 0x0 0x1000>;
+	clocks = <&clk_en_2 CLK_EN_TP>, <&clk_en_2 CLK_EN_TPB>;
+	status = "okay";
+};
+

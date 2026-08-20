@@ -1,0 +1,55 @@
+config RTK_CHIP_INFO
+	tristate "RTK SOC Chip information"
+	default y
+	select SOC_BUS
+	---help---
+	  The Realtek chips information.
+
+config RTK_MEM_REMAP
+	bool "Realtek memory remap"
+	default y
+	---help---
+	  Enable helper functions for static ioremap. If unsure, say N.
+
+config RTK_RBUS_BARRIER
+	bool "Realtek rbus barrier"
+	depends on RTK_MEM_REMAP
+	default y
+	---help---
+	  Enable helper functions for R-bus barrier. If unsure, say N.
+
+config RTK_SB2_MEM_TRASH_MONITOR
+	bool "Realtek memory trash monitor"
+	default y
+	---help---
+	  Enable helper functions for memory trash detection. If unsure, say N.
+
+config RTK_USB_CTRL_MANAGER
+	tristate "RTK Multiple USB Host/Device Controller Manager"
+	default y if USB_OHCI_RTK || USB_EHCI_RTK || USB_DWC3_RTK
+	---help---
+	  The Realtek chips are Multiple host/peripheral USB controllers.
+	  Enable the driver to control clock, reset and usb power gpio.
+
+config RTK_MCP
+	bool "Realtek MCP driver"
+	default n
+	---help---
+	  Realtek MCP driver
+
+config RTK_FAN
+	bool "RTK Fan driver"
+	default n
+	---help---
+	  Realtek Fan driver
+
+config RTK_TRANSCODE
+	bool "Support RTK Transcode"
+	default n
+	---help---
+	  Adjust ION heap for transcode
+
+source "drivers/soc/realtek/common/rpc/Kconfig"
+source "drivers/soc/realtek/common/dvfs/Kconfig"
+source "drivers/soc/realtek/common/rtk_pd/Kconfig"
+source "drivers/soc/realtek/common/rtk_se/Kconfig"

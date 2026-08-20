@@ -1,0 +1,16 @@
+Realtek RTC Reload DT-binding
+=============================
+
+* required properties:
+
+- compatible: shall contain "realtek,rtc-reload".
+
+- reg: shall contain 1 register address.
+
+Example:
+
+	rtc-reload@9800765c {
+		compatible = "realtek,rtc-reload";
+		reg = <0x0 0x9800765c 0x0 0x4>;
+		status = "okay";
+	};

@@ -1,0 +1,32 @@
+Example:
+
+display-subsystem {
+	compatible = "realtek,display-subsystem";
+};
+
+vedio_out: vo@98000000 {
+	compatible = "realtek,crtc";
+	reg = <0x0 0x98000000 0x0 0x100>;
+	vo: port {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		vo_hdmi: endpoint@0 {
+			reg = <0>;
+			remote-endpoint = <&hdmi_in_vo>;
+		};
+	};
+};
+
+hdmi: hdmi@9800D000 {
+    compatible = "realtek,rtk-hdmi";
+	reg = <0x0 0x9800d000 0x0 0x560>;
+	gpio-hpd-detect = <&rtk_iso_gpio 7 0 0>;
+	hdmi_in: port {
+		#address-cells = <1>;
+		#size-cells = <0>;
+		hdmi_in_vo: endpoint@0 {
+			reg = <0>;
+			remote-endpoint = <&vo_hdmi>;
+		};
+	};
+}

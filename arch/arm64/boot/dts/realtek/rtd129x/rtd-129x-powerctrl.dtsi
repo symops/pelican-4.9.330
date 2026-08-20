@@ -1,0 +1,4 @@
+/{
+	/include/ "rtd-129x-powerctrl-common.dtsi"
+};
+

@@ -1,0 +1,15 @@
+Realtek DC-SYS PMU dt-bindings
+==============================
+
+Required properties:
+- compatible:
+        - "realtek,rtk-16xx-dc-pmu" for rtd16xx family
+        - "realtek,rtk-13xx-dc-pmu" for rtd13xx family
+- reg: Address range of DC-SYS PMU
+
+Example:
+
+	rtk-dc-pmu@98008000 {
+                compatible = "realtek,rtk-16xx-dc-pmu";
+                reg = <0x0 0x98008000 0x0 0x0900>;
+	};

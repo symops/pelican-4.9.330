@@ -1,0 +1,31 @@
+refclk dt-bindings
+==================
+
+Provider
+--------
+
+Required property:
+
+compatible: should be "realtek,refclk".
+
+reg: shold contain the io space of refclk
+
+
+Example:
+
+	refclk: refclk@12345678 {
+		compatible = "realtek,refclk";
+		...
+	};
+
+Consumer
+--------
+
+Required property:
+
+realtek,refclk: a phandle to refclk
+
+Example:
+	consumer {
+		realtek,refclk = <&refclk>;
+	};

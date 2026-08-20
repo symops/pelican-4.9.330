@@ -1,0 +1,14 @@
+Realtek Power Domain DT-bindings
+================================
+
+required propertise:
+
+- compatible : shall contain the one of followings :
+        "realtek,rtd1295-power",
+        "realtek,rtd1395-power",
+        "realtek,rtd1619-power",
+        "realtek,rtd1319-power",
+        "realtek,rtd1619b-power".
+
+- #power-domain-cells : shall contain unsigned int 1
+

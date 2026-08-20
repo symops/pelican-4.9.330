@@ -1,0 +1,14 @@
+Realtek DDR memory controller PMU dt-bindings
+=============================================
+
+Required properties:
+- compatible:
+        "realtek,rtd-dmc-pmu"
+- reg: Address range of DDR controller PMU
+
+Example:
+
+	rtk-dmc-pmu@9800EB00 {
+                compatible = "realtek,rtk-dmc-pmu";
+                reg = <0x0 0x9800EB00 0x0 0x040>;
+	};

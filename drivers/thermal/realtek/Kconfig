@@ -1,0 +1,19 @@
+config RTK_THERMAL
+	bool "Realtek thermal management"
+	depends on OF && THERMAL_OF
+	help
+	  Enable thermal management with a generic thermal
+	  sensor driver on Realtek SoCs.
+
+	  If you want this support, you should say Y here.
+
+config RTK_THERMAL_EOH
+	bool "Realtek thermal sensor EOH"
+	depends on RTK_THERMAL
+
+config RTK_THERMAL_CPU_CORE_COOLING
+	bool "Realtek CPU core cooling device"
+	help
+	  This enable Realtek CPU core cooling device drvier
+
+	  If not sure, say N
